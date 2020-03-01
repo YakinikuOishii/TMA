@@ -9,14 +9,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="62" id="KGk-i7-Jjw" customClass="TaskTableViewCell" customModule="TMA" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="62" id="KGk-i7-Jjw" customClass="TaskTableViewCell" customModule="TMA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="5stars.png" translatesAutoresizingMaskIntoConstraints="NO" id="GJD-GC-xhH">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="star5.png" translatesAutoresizingMaskIntoConstraints="NO" id="GJD-GC-xhH">
                         <rect key="frame" x="0.0" y="0.0" width="62" height="62"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -31,13 +31,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="priorityLabel" destination="GJD-GC-xhH" id="ywc-Zh-sGy"/>
+                <outlet property="priorityImageView" destination="GJD-GC-xhH" id="ngN-OK-KiP"/>
                 <outlet property="taskLabel" destination="BPG-yz-KKQ" id="fag-9p-erO"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="158.70535714285714"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="5stars.png" width="250" height="250"/>
+        <image name="star5.png" width="250" height="250"/>
     </resources>
 </document>

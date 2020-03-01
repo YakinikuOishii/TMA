@@ -11,7 +11,7 @@ import UIKit
 class TaskTableViewCell: UITableViewCell {
 
     @IBOutlet var taskLabel: UILabel!
-    @IBOutlet var priorityLabel: UIImageView!
+    @IBOutlet var priorityImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
