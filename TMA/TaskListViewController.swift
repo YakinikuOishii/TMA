@@ -61,14 +61,20 @@ class TaskListViewController: UIViewController {
         if goalItems[indexNum].tasks.count == 0 {
             progressLabel.text = "0 / 0"
         }else{
-            taskItems = goalItem.tasks
-            //            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
-            //            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
+            taskItems = goalItem.tasks // ここでソートする
+            let allTaskCount = goalItem.tasks.count + goalItem.doneCount
+            progressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
         }
         //        print("taskItemsは\(taskItems)")
     }
+    
+    // UIを更新するメソッド作る
+    func updateUI() {
+        
+    }
 }
 
+// MARK: - DetaSource
 extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return taskItems.count
@@ -93,6 +99,7 @@ extension TaskListViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - Delegate
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
@@ -103,9 +110,33 @@ extension TaskListViewController: UITableViewDelegate {
         return true
     }
     
-    // 右から左へスワイプした時に呼ばれるメソッド
+    // 左から右へスワイプ
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // MARK: DONEアクション
+        let doneAction = UIContextualAction(style: .normal,title:  "完了",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+            success(true)
+            let doneItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+            let doneCount = self.goalItem.doneCount + 1
+            print(self.goalItem)
+            
+            try! self.realm.write {
+                self.realm.delete(doneItem)
+                self.goalItem.doneCount = doneCount
+//                self.realm.add(self.goalItem)
+            }
+            
+            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        })
+        
+        doneAction.backgroundColor = .green
+        return UISwipeActionsConfiguration(actions: [doneAction])
+    }
+    
+    // 右から左へスワイプ
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let removeAction = UIContextualAction(style: .normal,title:  "移動",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+        // MARK: 削除アクション
+        let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
             success(true)
             let deleteItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
             print(deleteItem)
@@ -114,8 +145,8 @@ extension TaskListViewController: UITableViewDelegate {
             }
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
         })
-        removeAction.backgroundColor = .red
-        return UISwipeActionsConfiguration(actions: [removeAction])
+        deleteAction.backgroundColor = .red
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }
 
