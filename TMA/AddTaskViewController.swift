@@ -47,15 +47,20 @@ class AddTaskViewController: UIViewController {
             task.doneCount = self.doneCount
             task.priority = priorityNum
             try! realm.write {
-                for goal in goalItems {
-                    goal.tasks.append(task)
-                }
-//                goal.tasks[indexNum] = task
-//                realm.add(goal.tasks[indexNum])
+                goalItems[indexNum].tasks.append(task)
             }
         }
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func back() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // テキストフィールド外を触るとキーボードが閉じる
+        self.view.endEditing(true)
     }
     
     func priorityJudgment() {

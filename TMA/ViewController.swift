@@ -76,16 +76,14 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: GoalTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GoalTableViewCell
-        indexNum = indexPath.section
         let goalItems = realm.objects(Goal.self)
         goalItem = goalItems[indexPath.section]
         
         if goalItem.tasks.count == 0 {
             cell.taskProgressLabel.text = "0 / 0"
-            print("\(indexPath.section)taskItemsNone")
         }else{
             
-            let taskItem = goalItem.tasks[indexPath.section]
+//            let taskItem = goalItem.tasks[indexPath.section]
 //            let allTaskCount = goalItem.tasks.count + taskItem.doneCount
 //            cell.taskProgressLabel.text = "\(taskItem.doneCount) / \(allTaskCount)"
         }
@@ -99,6 +97,7 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         indexNum = indexPath.section
+        print(indexNum)
         performSegue(withIdentifier: "toTask", sender: nil)
     }
 }

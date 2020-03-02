@@ -55,6 +55,7 @@ class TaskListViewController: UIViewController {
     func setGoal() {
         let goalItems = realm.objects(Goal.self)
         goalItem = goalItems[indexNum]
+        print("indexNumは\(indexNum)")
         goalLabel.text = goalItem.goalText
         
         if goalItems[indexNum].tasks.count == 0 {
