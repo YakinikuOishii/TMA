@@ -19,6 +19,7 @@ class TaskListViewController: UIViewController {
     
     var indexNum: Int = 0
     var goalItem = Goal()
+    var taskItems = List<Task>()
     
     let realm = try! Realm()
     
@@ -59,28 +60,30 @@ class TaskListViewController: UIViewController {
         if goalItems[indexNum].tasks.count == 0 {
             progressLabel.text = "0 / 0"
         }else{
-            let taskItem = goalItem.tasks
-            let allTaskCount = taskItem[indexNum].taskText.count + taskItem[indexNum].doneCount
-            progressLabel.text = "\(taskItem[indexNum].doneCount) / \(allTaskCount)"
+            taskItems = goalItem.tasks
+            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
+            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
         }
+        print("taskItemsは\(taskItems)")
     }
-    
 }
 
 extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let taskItems = goalItem.tasks
-        return taskItems[indexNum].taskText.count
+        return taskItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 62
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TaskTableViewCell
-        let taskItems = goalItem.tasks
-        let taskItemsByPriority = taskItems.sorted(byKeyPath: "priority")
-        let taskItem = taskItemsByPriority[indexPath.row]
-        cell.taskLabel.text = taskItem.taskText
+        let taskItemsByPriority = taskItems.sorted(byKeyPath: "priority", ascending: false) // ascending: falseで降順
+        print("ソート後は\(taskItemsByPriority)")
+        cell.taskLabel.text = taskItemsByPriority[indexPath.row].taskText
         for i in 1...5 {
-            if i == taskItem.priority {
+            if i == taskItemsByPriority[indexPath.row].priority {
                 cell.priorityImageView.image = UIImage(named: "star\(i).png")
             }
         }

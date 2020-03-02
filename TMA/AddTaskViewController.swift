@@ -37,6 +37,8 @@ class AddTaskViewController: UIViewController {
     }
     
     @IBAction func addTask() {
+        // 文字数制限かける
+        priorityJudgment()
         if textField.text?.isEmpty == true {
             // アラート
         }else{
@@ -109,6 +111,5 @@ extension AddTaskViewController: UIPickerViewDelegate {
         }else if pickerView.tag == 2 {
             importanceNum = row
         }
-        priorityJudgment()
     }
 }

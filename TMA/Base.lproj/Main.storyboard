@@ -220,22 +220,22 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="アプリをリリース" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uka-CT-GJZ">
-                                <rect key="frame" x="115" y="199.5" width="184" height="26"/>
-                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="23"/>
+                                <rect key="frame" x="135" y="202.5" width="144" height="20.5"/>
+                                <fontDescription key="fontDescription" name="Arial-BoldMT" family="Arial" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="reward_badge1.png" translatesAutoresizingMaskIntoConstraints="NO" id="hF6-XO-0pS">
-                                <rect key="frame" x="171" y="153" width="72" height="38"/>
+                                <rect key="frame" x="171" y="153" width="72" height="41"/>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OsG-NK-0Cu">
-                                <rect key="frame" x="132" y="239" width="150" height="2"/>
+                                <rect key="frame" x="132" y="236.5" width="150" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="eRH-th-bf5"/>
                                 </constraints>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhH-N7-PDv">
-                                <rect key="frame" x="196" y="249" width="22" height="14"/>
+                                <rect key="frame" x="196" y="246.5" width="22" height="14"/>
                                 <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -270,9 +270,12 @@
                                     <action selector="addTask" destination="Euv-ac-Qui" eventType="touchUpInside" id="7Gf-qT-R2M"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALg-QF-1vz">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ALg-QF-1vz">
                                 <rect key="frame" x="20" y="74" width="32" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="9G3-Wp-8Er"/>
+                                    <constraint firstAttribute="width" constant="32" id="dbE-Wk-jPR"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="backButton.png"/>
                                 <connections>
                                     <action selector="back" destination="Euv-ac-Qui" eventType="touchUpInside" id="ftD-bJ-vqi"/>
@@ -302,6 +305,8 @@
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="leading" secondItem="nsK-c2-cMN" secondAttribute="leading" constant="56" id="dSt-A4-mmD"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerY" secondItem="uka-CT-GJZ" secondAttribute="centerY" id="e8l-Ey-7Tl"/>
                             <constraint firstItem="QhH-N7-PDv" firstAttribute="top" secondItem="OsG-NK-0Cu" secondAttribute="bottom" constant="8" id="efQ-sb-Kkg"/>
+                            <constraint firstItem="ALg-QF-1vz" firstAttribute="top" secondItem="Koe-BU-8yG" secondAttribute="top" id="vBl-7N-xpr"/>
+                            <constraint firstItem="ALg-QF-1vz" firstAttribute="leading" secondItem="5NK-wM-yss" secondAttribute="leadingMargin" id="vTg-vM-ouQ"/>
                             <constraint firstItem="OsG-NK-0Cu" firstAttribute="top" secondItem="uka-CT-GJZ" secondAttribute="bottom" constant="13.5" id="vis-eb-hMo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nsK-c2-cMN"/>
