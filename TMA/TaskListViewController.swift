@@ -61,10 +61,10 @@ class TaskListViewController: UIViewController {
             progressLabel.text = "0 / 0"
         }else{
             taskItems = goalItem.tasks
-            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
-            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
+//            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
+//            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
         }
-        print("taskItemsは\(taskItems)")
+//        print("taskItemsは\(taskItems)")
     }
 }
 

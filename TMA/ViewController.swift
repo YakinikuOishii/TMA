@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     var taskArray: [String] = []
     var doneArray: [String] = []
     var indexNum: Int = 0
-    var goalText: String!
     
     let realm = try! Realm()
     var goalItem = Goal()
@@ -34,6 +33,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         let goalItems = realm.objects(Goal.self)
         goalItemsCount = goalItems.count
+        print("goalItemsは\(goalItems)")
         tableView.reloadData()
     }
     
@@ -61,8 +61,7 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         view.tintColor = .clear
-        view.backgroundColor = .clear
-        // 透明にならない＞＜
+        view.backgroundColor = .clear // 透明にならない＞＜
     }
     
     
@@ -80,15 +79,15 @@ extension ViewController: UITableViewDataSource {
         indexNum = indexPath.section
         let goalItems = realm.objects(Goal.self)
         goalItem = goalItems[indexPath.section]
-        goalText = goalItem.goalText
         
-        let taskItems = goalItem.tasks
-        if taskItems.count == 0 {
+        if goalItem.tasks.count == 0 {
             cell.taskProgressLabel.text = "0 / 0"
+            print("\(indexPath.section)taskItemsNone")
         }else{
-            let taskItem = taskItems[indexPath.section]
-            let allTaskCount = taskItem.taskText.count + taskItem.doneCount
-            cell.taskProgressLabel.text = "\(taskItem.doneCount) / \(allTaskCount)"
+            
+            let taskItem = goalItem.tasks[indexPath.section]
+//            let allTaskCount = goalItem.tasks.count + taskItem.doneCount
+//            cell.taskProgressLabel.text = "\(taskItem.doneCount) / \(allTaskCount)"
         }
         
         cell.goalTitleLabel.text = goalItem.goalText
