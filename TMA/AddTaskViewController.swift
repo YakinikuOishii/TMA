@@ -44,7 +44,7 @@ class AddTaskViewController: UIViewController {
         }else{
             let goalItems = realm.objects(Goal.self)
             task.taskText = textField.text!
-            task.doneCount = self.doneCount
+//            task.doneCount = self.doneCount
             task.priority = priorityNum
             try! realm.write {
                 goalItems[indexNum].tasks.append(task)

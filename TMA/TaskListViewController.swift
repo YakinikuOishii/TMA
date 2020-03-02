@@ -98,4 +98,22 @@ extension TaskListViewController: UITableViewDelegate {
         print(indexPath.row)
     }
     
+    //セルの編集許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let goalItems = realm.objects(Goal.self)
+            goalItem = goalItems[indexPath.row]
+            let deleteItem = taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+            print(deleteItem)
+//            try! realm.write{
+//                realm.delete(deleteItem)
+//            }
+//            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+        }
+    }
+    
 }
