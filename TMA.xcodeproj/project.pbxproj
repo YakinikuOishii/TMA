@@ -168,8 +168,8 @@
 		593D071A240A4EFA007F7558 /* TMA */ = {
 			isa = PBXGroup;
 			children = (
-				593D074E240B532D007F7558 /* img */,
 				593D071B240A4EFA007F7558 /* AppDelegate.swift */,
+				593D074E240B532D007F7558 /* img */,
 				593D071D240A4EFA007F7558 /* SceneDelegate.swift */,
 				593D071F240A4EFA007F7558 /* ViewController.swift */,
 				593D0779240BA101007F7558 /* AddGoalViewController.swift */,

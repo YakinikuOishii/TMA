@@ -62,10 +62,10 @@ class TaskListViewController: UIViewController {
             progressLabel.text = "0 / 0"
         }else{
             taskItems = goalItem.tasks
-//            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
-//            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
+            //            let allTaskCount = taskItems[indexNum].taskText.count + taskItems[indexNum].doneCount // 数がおかしい
+            //            progressLabel.text = "\(taskItems[indexNum].doneCount) / \(allTaskCount)"
         }
-//        print("taskItemsは\(taskItems)")
+        //        print("taskItemsは\(taskItems)")
     }
 }
 
@@ -103,15 +103,42 @@ extension TaskListViewController: UITableViewDelegate {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let deleteItem = taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+    // 右から左へスワイプした時に呼ばれるメソッド
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let removeAction = UIContextualAction(style: .normal,title:  "移動",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+            success(true)
+            let deleteItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
             print(deleteItem)
-            try! realm.write{
-                realm.delete(deleteItem)
+            try! self.realm.write{
+                self.realm.delete(deleteItem)
             }
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-        }
+        })
+        removeAction.backgroundColor = .red
+        return UISwipeActionsConfiguration(actions: [removeAction])
     }
-    
 }
+
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let deleteItem = taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+//            print(deleteItem)
+//            try! realm.write{
+//                realm.delete(deleteItem)
+//            }
+//            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+//        }
+//    }
+
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//
+//        let deleteButton: UITableViewRowAction = UITableViewRowAction(style: .normal, title: "削除") { (action, index) -> Void in
+//            self.array.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//        }
+//        deleteButton.backgroundColor = UIColor.red
+//
+//        return [deleteButton]
+//    }
+
+
