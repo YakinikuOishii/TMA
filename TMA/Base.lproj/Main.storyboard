@@ -318,8 +318,8 @@
                     <connections>
                         <outlet property="badgeImageView" destination="hF6-XO-0pS" id="29t-cX-kgM"/>
                         <outlet property="goalLabel" destination="uka-CT-GJZ" id="IVG-nK-L2B"/>
-                        <outlet property="progressBar" destination="OsG-NK-0Cu" id="PSj-68-ley"/>
                         <outlet property="progressLabel" destination="QhH-N7-PDv" id="JIb-Yr-gd3"/>
+                        <outlet property="progressView" destination="OsG-NK-0Cu" id="S47-f7-Jpr"/>
                         <outlet property="tableView" destination="3MG-FV-e4d" id="KG4-mS-G1I"/>
                         <segue destination="n2a-S9-02N" kind="presentation" identifier="toAddTask" id="aae-2Q-vhj"/>
                     </connections>

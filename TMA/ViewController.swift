@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toTask" {
             let nextVC: TaskListViewController = segue.destination as! TaskListViewController
-            nextVC.indexNum = self.indexNum
+            nextVC.goalIndexNum = self.indexNum
 //            nextVC.goalLabel.text = goalText
         }
     }

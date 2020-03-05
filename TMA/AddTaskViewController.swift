@@ -20,8 +20,12 @@ class AddTaskViewController: UIViewController {
     var difficultyNum: Int = 0
     var importanceNum: Int = 0
     var priorityNum: Int = 0
-    var indexNum: Int = 0
+    
+    var goalIndexNum: Int = 0
+    var taskIndexNum: Int = 0
     var doneCount: Int = 0
+    var taskText: String!
+    var editBool: Bool = false
     
     let realm = try! Realm()
     let goal = Goal()
@@ -36,18 +40,39 @@ class AddTaskViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print("editBoolは\(editBool)")
+        if editBool == true {
+            textField.text = taskText
+        }
+    }
+    
     @IBAction func addTask() {
         // 文字数制限かける
         priorityJudgment()
-        if textField.text?.isEmpty == true {
-            // アラート
-        }else{
-            let goalItems = realm.objects(Goal.self)
-            task.taskText = textField.text!
-//            task.doneCount = self.doneCount
-            task.priority = priorityNum
-            try! realm.write {
-                goalItems[indexNum].tasks.append(task)
+        
+        if editBool == false {
+            if textField.text?.isEmpty == true {
+                // アラート
+            }else{
+                let goalItems = realm.objects(Goal.self)
+                task.taskText = textField.text!
+                task.priority = priorityNum
+                try! realm.write {
+                    goalItems[goalIndexNum].tasks.append(task)
+                }
+            }
+        }else if editBool == true {
+            if textField.text?.isEmpty == true {
+                // アラート
+            }else{
+                let goalItems = realm.objects(Goal.self)
+                task.taskText = textField.text!
+                task.priority = priorityNum
+                try! realm.write {
+                    goalItems[goalIndexNum].tasks[taskIndexNum].taskText = textField.text!
+                    goalItems[goalIndexNum].tasks[taskIndexNum].priority = priorityNum
+                }
             }
         }
         
