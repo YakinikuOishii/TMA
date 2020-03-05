@@ -19,7 +19,7 @@ class TaskListViewController: UIViewController {
     
     var goalIndexNum: Int = 0
     var taskIndexNum: Int = 0
-    var taskText: String!
+    var taskTextArray: [String] = []
     var goalItem = Goal()
     var taskItems = List<Task>()
     var editBool: Bool = false
@@ -47,7 +47,7 @@ class TaskListViewController: UIViewController {
                nextVC.taskIndexNum = self.taskIndexNum
             if editBool == true {
                 nextVC.editBool = true
-                nextVC.taskText = self.taskText
+                nextVC.taskText = self.taskTextArray[taskIndexNum]
             }
            }
            
@@ -101,6 +101,8 @@ extension TaskListViewController: UITableViewDataSource {
         let taskItemsByPriority = taskItems.sorted(byKeyPath: "priority", ascending: false) // ascending: falseで降順
 //        print("ソート後は\(taskItemsByPriority)")
         cell.taskLabel.text = taskItemsByPriority[indexPath.row].taskText
+        taskTextArray.append(taskItemsByPriority[indexPath.row].taskText)
+        
         for i in 1...5 {
             if i == taskItemsByPriority[indexPath.row].priority {
                 cell.priorityImageView.image = UIImage(named: "star\(i).png")
@@ -114,9 +116,7 @@ extension TaskListViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TaskTableViewCell
         taskIndexNum = indexPath.row
-        taskText = cell.taskLabel.text!
         editBool = true
         performSegue(withIdentifier: "toAddTask", sender: nil)
         
