@@ -274,14 +274,11 @@
                                 <rect key="frame" x="171" y="153" width="72" height="41"/>
                             </imageView>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OsG-NK-0Cu">
-                                <rect key="frame" x="132" y="236.5" width="150" height="2"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="eRH-th-bf5"/>
-                                </constraints>
+                                <rect key="frame" x="116" y="236.5" width="182" height="2"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhH-N7-PDv">
-                                <rect key="frame" x="196" y="246.5" width="22" height="14"/>
-                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="12"/>
+                                <rect key="frame" x="193.5" y="254.5" width="27" height="17.5"/>
+                                <fontDescription key="fontDescription" name="DINAlternate-Bold" family="DIN Alternate" pointSize="15"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -333,7 +330,9 @@
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerX" secondItem="QhH-N7-PDv" secondAttribute="centerX" id="2Qt-kk-CVa"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerX" secondItem="hF6-XO-0pS" secondAttribute="centerX" id="5XJ-hq-7Zm"/>
                             <constraint firstItem="zhe-XZ-vNe" firstAttribute="top" secondItem="3MG-FV-e4d" secondAttribute="bottom" constant="21" id="70P-18-Wjd"/>
+                            <constraint firstItem="OsG-NK-0Cu" firstAttribute="leading" secondItem="5NK-wM-yss" secondAttribute="leadingMargin" constant="96" id="84y-p6-miC"/>
                             <constraint firstItem="uka-CT-GJZ" firstAttribute="top" secondItem="hF6-XO-0pS" secondAttribute="bottom" constant="8.5" id="C8v-bv-Y28"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="OsG-NK-0Cu" secondAttribute="trailing" constant="96" id="Ckj-YB-a6U"/>
                             <constraint firstItem="3MG-FV-e4d" firstAttribute="top" secondItem="vRd-hs-vxV" secondAttribute="bottom" constant="34" id="EeJ-M4-abW"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="top" secondItem="5NK-wM-yss" secondAttribute="top" constant="134" id="L5Z-Hk-Ktj"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerX" secondItem="uka-CT-GJZ" secondAttribute="centerX" id="QVw-D0-QDX"/>
@@ -349,7 +348,7 @@
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerX" secondItem="zhe-XZ-vNe" secondAttribute="centerX" id="dK8-7j-eti"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="leading" secondItem="nsK-c2-cMN" secondAttribute="leading" constant="56" id="dSt-A4-mmD"/>
                             <constraint firstItem="vRd-hs-vxV" firstAttribute="centerY" secondItem="uka-CT-GJZ" secondAttribute="centerY" id="e8l-Ey-7Tl"/>
-                            <constraint firstItem="QhH-N7-PDv" firstAttribute="top" secondItem="OsG-NK-0Cu" secondAttribute="bottom" constant="8" id="efQ-sb-Kkg"/>
+                            <constraint firstItem="QhH-N7-PDv" firstAttribute="top" secondItem="OsG-NK-0Cu" secondAttribute="bottom" constant="16" id="efQ-sb-Kkg"/>
                             <constraint firstItem="ALg-QF-1vz" firstAttribute="top" secondItem="Koe-BU-8yG" secondAttribute="top" id="vBl-7N-xpr"/>
                             <constraint firstItem="ALg-QF-1vz" firstAttribute="leading" secondItem="5NK-wM-yss" secondAttribute="leadingMargin" id="vTg-vM-ouQ"/>
                             <constraint firstItem="OsG-NK-0Cu" firstAttribute="top" secondItem="uka-CT-GJZ" secondAttribute="bottom" constant="13.5" id="vis-eb-hMo"/>

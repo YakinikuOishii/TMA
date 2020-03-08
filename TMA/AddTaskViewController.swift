@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import CDAlertView
 
 class AddTaskViewController: UIViewController {
     
@@ -53,7 +54,7 @@ class AddTaskViewController: UIViewController {
         
         if editBool == false {
             if textField.text?.isEmpty == true {
-                // アラート
+                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }else{
                 let goalItems = realm.objects(Goal.self)
                 task.taskText = textField.text!
@@ -61,10 +62,11 @@ class AddTaskViewController: UIViewController {
                 try! realm.write {
                     goalItems[goalIndexNum].tasks.append(task)
                 }
+                dismiss(animated: true, completion: nil)
             }
         }else if editBool == true {
             if textField.text?.isEmpty == true {
-                // アラート
+                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }else{
                 let goalItems = realm.objects(Goal.self)
                 task.taskText = textField.text!
@@ -73,10 +75,9 @@ class AddTaskViewController: UIViewController {
                     goalItems[goalIndexNum].tasks[taskIndexNum].taskText = textField.text!
                     goalItems[goalIndexNum].tasks[taskIndexNum].priority = priorityNum
                 }
+                dismiss(animated: true, completion: nil)
             }
         }
-        
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func back() {

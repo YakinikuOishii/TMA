@@ -23,6 +23,7 @@ class TaskListViewController: UIViewController {
     var goalItem = Goal()
     var taskItems = List<Task>()
     var editBool: Bool = false
+    var themaColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
     
     let realm = try! Realm()
     
@@ -31,6 +32,8 @@ class TaskListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "TaskTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
+        progressView.tintColor = themaColor
+        progressView.transform = CGAffineTransform(scaleX: 1.0, y: 2.0)
         // Do any additional setup after loading the view.
     }
     
@@ -70,12 +73,16 @@ class TaskListViewController: UIViewController {
         
         if goalItems[goalIndexNum].tasks.count == 0 && goalItems[goalIndexNum].doneCount == 0 {
             progressLabel.text = "0 / 0"
+            progressView.setProgress(0.0, animated: true)
         }else{
             taskItems = goalItem.tasks // ここでソートする
             let allTaskCount = goalItem.tasks.count + goalItem.doneCount
             progressView.setProgress(Float(goalItem.doneCount)/Float(allTaskCount), animated: true)
             print(Float(goalItem.doneCount)/Float(allTaskCount))
             progressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
+            if goalItem.doneCount == allTaskCount {
+                progressLabel.textColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+            }
         }
         //        print("taskItemsは\(taskItems)")
     }
@@ -99,7 +106,6 @@ extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TaskTableViewCell
         let taskItemsByPriority = taskItems.sorted(byKeyPath: "priority", ascending: false) // ascending: falseで降順
-//        print("ソート後は\(taskItemsByPriority)")
         cell.taskLabel.text = taskItemsByPriority[indexPath.row].taskText
         taskTextArray.append(taskItemsByPriority[indexPath.row].taskText)
         
@@ -109,6 +115,9 @@ extension TaskListViewController: UITableViewDataSource {
             }
         }
         
+        if indexPath.row == 0 {
+            cell.backgroundColor = themaColor
+        }
         return cell
     }
 }
@@ -145,7 +154,7 @@ extension TaskListViewController: UITableViewDelegate {
             self.setGoal()
         })
         
-        doneAction.backgroundColor = .green
+        doneAction.backgroundColor = themaColor
         return UISwipeActionsConfiguration(actions: [doneAction])
     }
     
@@ -161,7 +170,7 @@ extension TaskListViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             self.setGoal()
         })
-        deleteAction.backgroundColor = .red
+        deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

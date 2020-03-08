@@ -34,10 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9w6-p6-gau">
-                        <rect key="frame" x="56" y="105" width="222" height="2"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="222" id="tZo-ef-thl"/>
-                        </constraints>
+                        <rect key="frame" x="44" y="105" width="246" height="2"/>
                     </progressView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 / 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8K-Rg-mv5">
                         <rect key="frame" x="154.5" y="115" width="25" height="16.5"/>
@@ -52,8 +49,10 @@
                     <constraint firstItem="CLJ-oM-OZ6" firstAttribute="top" secondItem="DA6-Cg-vzn" secondAttribute="bottom" constant="16" id="MZd-3S-DCu"/>
                     <constraint firstItem="CLJ-oM-OZ6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="OIU-rW-bej"/>
                     <constraint firstItem="9w6-p6-gau" firstAttribute="top" secondItem="CLJ-oM-OZ6" secondAttribute="bottom" constant="16" id="e9Y-Ez-0j1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9w6-p6-gau" secondAttribute="trailing" constant="24" id="oJd-Ut-wZz"/>
                     <constraint firstItem="S8K-Rg-mv5" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="qhy-fE-hsm"/>
                     <constraint firstItem="CLJ-oM-OZ6" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="y03-V9-e7z"/>
+                    <constraint firstItem="9w6-p6-gau" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="ycS-dM-LKn"/>
                     <constraint firstItem="DA6-Cg-vzn" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="zoE-wO-tqg"/>
                 </constraints>
             </tableViewCellContentView>

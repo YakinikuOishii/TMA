@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     let realm = try! Realm()
     var goalItem = Goal()
     var goalItemsCount: Int!
+    var themaColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,16 +81,22 @@ extension ViewController: UITableViewDataSource {
         let goalItems = realm.objects(Goal.self)
         goalItem = goalItems[indexPath.section]
         
-        if goalItem.tasks.count == 0 {
+        if goalItem.tasks.count == 0 && goalItem.doneCount == 0 {
             cell.taskProgressLabel.text = "0 / 0"
+            cell.taskProgressView.setProgress(0.0, animated: true)
         }else{
-            
-//            let taskItem = goalItem.tasks[indexPath.section]
-//            let allTaskCount = goalItem.tasks.count + taskItem.doneCount
-//            cell.taskProgressLabel.text = "\(taskItem.doneCount) / \(allTaskCount)"
+            let allTaskCount = goalItem.tasks.count + goalItem.doneCount
+            cell.taskProgressView.setProgress(Float(goalItem.doneCount)/Float(allTaskCount), animated: true)
+            cell.taskProgressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
+            if goalItem.doneCount == allTaskCount {
+                cell.taskProgressLabel.textColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+            }
         }
         
         cell.goalTitleLabel.text = goalItem.goalText
+        
+        cell.taskProgressView.tintColor = themaColor
+        cell.taskProgressView.transform = CGAffineTransform(scaleX: 1.0, y: 2.0)
         
         cell.layer.shadowOpacity = 0.2
         cell.layer.shadowRadius = 20

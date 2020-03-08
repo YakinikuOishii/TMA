@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-TMA/Pods-TMA-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CDAlertView/CDAlertView.framework
 ${BUILT_PRODUCTS_DIR}/Realm/Realm.framework
 ${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework

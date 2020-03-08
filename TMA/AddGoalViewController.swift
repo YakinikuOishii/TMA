@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import CDAlertView
 
 class AddGoalViewController: UIViewController {
     
@@ -18,21 +19,20 @@ class AddGoalViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
     @IBAction func addGoal() {
         if textField.text?.isEmpty == true{
-            // アラート
+            CDAlertView(title: "ゴールが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
         }else{
             goal.goalText = textField.text!
             
             try! realm.write{
                 realm.add(goal)
             }
+            dismiss(animated: true, completion: nil)
         }
-        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func back() {
