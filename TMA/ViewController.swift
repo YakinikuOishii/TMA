@@ -56,12 +56,13 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 80
+        return 30
     }
     
-    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        view.tintColor = .clear
-        view.backgroundColor = .clear // 透明にならない＞＜
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView: UIView = UIView()
+        footerView.backgroundColor = .clear
+        return footerView
     }
     
     
@@ -89,6 +90,12 @@ extension ViewController: UITableViewDataSource {
         }
         
         cell.goalTitleLabel.text = goalItem.goalText
+        
+        cell.layer.shadowOpacity = 0.2
+        cell.layer.shadowRadius = 20
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0.2, height: 0.2)
+        
         return cell
     }
 }
