@@ -82,6 +82,8 @@ class TaskListViewController: UIViewController {
             progressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
             if goalItem.doneCount == allTaskCount {
                 progressLabel.textColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+            }else{
+                progressLabel.textColor = .black
             }
         }
         //        print("taskItemsは\(taskItems)")

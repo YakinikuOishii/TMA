@@ -90,6 +90,8 @@ extension ViewController: UITableViewDataSource {
             cell.taskProgressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
             if goalItem.doneCount == allTaskCount {
                 cell.taskProgressLabel.textColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+            }else{
+                cell.taskProgressLabel.textColor = .black
             }
         }
         
