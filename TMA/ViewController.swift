@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         if segue.identifier == "toTask" {
             let nextVC: TaskListViewController = segue.destination as! TaskListViewController
             nextVC.goalIndexNum = self.indexNum
-//            nextVC.goalLabel.text = goalText
+            //            nextVC.goalLabel.text = goalText
         }
     }
     
@@ -116,5 +116,21 @@ extension ViewController: UITableViewDelegate {
         print(indexNum)
         performSegue(withIdentifier: "toTask", sender: nil)
     }
+    
+    // 右から左へスワイプ 削除
+//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+//            success(true)
+//            let deleteItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+//            //            print(deleteItem)
+//            try! self.realm.write{
+//                self.realm.delete(deleteItem)
+//            }
+//            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
+//            self.setGoal()
+//        })
+//        deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+//        return UISwipeActionsConfiguration(actions: [deleteAction])
+//    }
 }
 

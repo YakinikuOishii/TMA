@@ -154,6 +154,7 @@ extension TaskListViewController: UITableViewDelegate {
             
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             self.setGoal()
+            tableView.reloadData()
         })
         
         doneAction.backgroundColor = themaColor
@@ -171,6 +172,7 @@ extension TaskListViewController: UITableViewDelegate {
             }
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
             self.setGoal()
+            tableView.reloadData()
         })
         deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
         return UISwipeActionsConfiguration(actions: [deleteAction])

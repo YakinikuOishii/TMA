@@ -23,12 +23,12 @@ class AddGoalViewController: UIViewController {
     }
     
     @IBAction func addGoal() {
-        if textField.text?.isEmpty == true{
+        if textField.text?.isEmpty == true {
             CDAlertView(title: "ゴールが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
         }else{
             goal.goalText = textField.text!
             
-            try! realm.write{
+            try! realm.write {
                 realm.add(goal)
             }
             dismiss(animated: true, completion: nil)
