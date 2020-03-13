@@ -19,9 +19,10 @@ class ViewController: UIViewController {
     var indexNum: Int = 0
     
     let realm = try! Realm()
+    var goalItems: Results<Goal>!
     var goalItem = Goal()
     var goalItemsCount: Int!
-    var themaColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
+    var themeColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,9 +33,8 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        let goalItems = realm.objects(Goal.self)
+        goalItems = realm.objects(Goal.self)
         goalItemsCount = goalItems.count
-        print("goalItemsは\(goalItems)")
         tableView.reloadData()
     }
     
@@ -42,7 +42,6 @@ class ViewController: UIViewController {
         if segue.identifier == "toTask" {
             let nextVC: TaskListViewController = segue.destination as! TaskListViewController
             nextVC.goalIndexNum = self.indexNum
-            //            nextVC.goalLabel.text = goalText
         }
     }
     
@@ -78,7 +77,6 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: GoalTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GoalTableViewCell
-        let goalItems = realm.objects(Goal.self)
         goalItem = goalItems[indexPath.section]
         
         if goalItem.tasks.count == 0 && goalItem.doneCount == 0 {
@@ -97,7 +95,7 @@ extension ViewController: UITableViewDataSource {
         
         cell.goalTitleLabel.text = goalItem.goalText
         
-        cell.taskProgressView.tintColor = themaColor
+        cell.taskProgressView.tintColor = themeColor
         cell.taskProgressView.transform = CGAffineTransform(scaleX: 1.0, y: 2.0)
         
         cell.layer.shadowOpacity = 0.2
@@ -118,19 +116,17 @@ extension ViewController: UITableViewDelegate {
     }
     
     // 右から左へスワイプ 削除
-//    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
-//            success(true)
-//            let deleteItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
-//            //            print(deleteItem)
-//            try! self.realm.write{
-//                self.realm.delete(deleteItem)
-//            }
-//            tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-//            self.setGoal()
-//        })
-//        deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
-//        return UISwipeActionsConfiguration(actions: [deleteAction])
-//    }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+            success(true)
+            try! self.realm.write{
+                self.realm.delete(self.goalItems[indexPath.section])
+            }
+            self.goalItemsCount = self.goalItemsCount - 1
+            tableView.reloadData()
+        })
+        deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
 }
 

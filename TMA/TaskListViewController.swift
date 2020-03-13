@@ -20,10 +20,11 @@ class TaskListViewController: UIViewController {
     var goalIndexNum: Int = 0
     var taskIndexNum: Int = 0
     var taskTextArray: [String] = []
+    var goalItems: Results<Goal>!
     var goalItem = Goal()
-    var taskItems = List<Task>()
+    var taskItemsByPriority: Results<Task>!
     var editBool: Bool = false
-    var themaColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
+    var themeColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
     
     let realm = try! Realm()
     
@@ -32,13 +33,13 @@ class TaskListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "TaskTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-        progressView.tintColor = themaColor
+        progressView.tintColor = themeColor
         progressView.transform = CGAffineTransform(scaleX: 1.0, y: 2.0)
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        setGoal()
+        updateUI()
         tableView.reloadData()
     }
     
@@ -51,6 +52,7 @@ class TaskListViewController: UIViewController {
             if editBool == true {
                 nextVC.editBool = true
                 nextVC.taskText = self.taskTextArray[taskIndexNum]
+                print(taskTextArray)
             }
            }
            
@@ -66,8 +68,9 @@ class TaskListViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func setGoal() {
-        let goalItems = realm.objects(Goal.self)
+    // UIを更新するメソッド作る
+    func updateUI() {
+        goalItems = realm.objects(Goal.self)
         goalItem = goalItems[goalIndexNum]
         goalLabel.text = goalItem.goalText
         
@@ -75,30 +78,26 @@ class TaskListViewController: UIViewController {
             progressLabel.text = "0 / 0"
             progressView.setProgress(0.0, animated: true)
         }else{
-            taskItems = goalItem.tasks // ここでソートする
+            taskItemsByPriority = goalItem.tasks.sorted(byKeyPath: "priority", ascending: false) // ascending: falseで降順
+            
             let allTaskCount = goalItem.tasks.count + goalItem.doneCount
             progressView.setProgress(Float(goalItem.doneCount)/Float(allTaskCount), animated: true)
-            print(Float(goalItem.doneCount)/Float(allTaskCount))
+            
             progressLabel.text = "\(goalItem.doneCount) / \(allTaskCount)"
+            
             if goalItem.doneCount == allTaskCount {
                 progressLabel.textColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)
             }else{
                 progressLabel.textColor = .black
             }
         }
-        //        print("taskItemsは\(taskItems)")
-    }
-    
-    // UIを更新するメソッド作る
-    func updateUI() {
-        
     }
 }
 
 // MARK: - DetaSource
 extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskItems.count
+        return taskItemsByPriority.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -107,7 +106,7 @@ extension TaskListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TaskTableViewCell
-        let taskItemsByPriority = taskItems.sorted(byKeyPath: "priority", ascending: false) // ascending: falseで降順
+
         cell.taskLabel.text = taskItemsByPriority[indexPath.row].taskText
         taskTextArray.append(taskItemsByPriority[indexPath.row].taskText)
         
@@ -118,7 +117,7 @@ extension TaskListViewController: UITableViewDataSource {
         }
         
         if indexPath.row == 0 {
-            cell.backgroundColor = themaColor
+            cell.backgroundColor = themeColor
         }
         return cell
     }
@@ -142,22 +141,21 @@ extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let doneAction = UIContextualAction(style: .normal,title:  "完了",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
             success(true)
-            let doneItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+            let doneItem = self.taskItemsByPriority[indexPath.row]
             let doneCount = self.goalItem.doneCount + 1
 //            print(self.goalItem)
             
             try! self.realm.write {
                 self.realm.delete(doneItem)
                 self.goalItem.doneCount = doneCount
-//                self.realm.add(self.goalItem)
             }
             
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            self.setGoal()
+            self.updateUI()
             tableView.reloadData()
         })
         
-        doneAction.backgroundColor = themaColor
+        doneAction.backgroundColor = themeColor
         return UISwipeActionsConfiguration(actions: [doneAction])
     }
     
@@ -165,13 +163,13 @@ extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
             success(true)
-            let deleteItem = self.taskItems.sorted(byKeyPath: "priority", ascending: false)[indexPath.row]
+            let deleteItem = self.taskItemsByPriority[indexPath.row]
 //            print(deleteItem)
             try! self.realm.write{
                 self.realm.delete(deleteItem)
             }
             tableView.deleteRows(at: [indexPath as IndexPath], with: UITableView.RowAnimation.automatic)
-            self.setGoal()
+            self.updateUI()
             tableView.reloadData()
         })
         deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)

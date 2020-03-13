@@ -28,6 +28,7 @@ class AddTaskViewController: UIViewController {
     var taskText: String!
     var editBool: Bool = false
     
+    var goalItems: Results<Goal>!
     let realm = try! Realm()
     let goal = Goal()
     let task = Task()
@@ -42,6 +43,7 @@ class AddTaskViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        goalItems = realm.objects(Goal.self)
         print("editBoolは\(editBool)")
         if editBool == true {
             textField.text = taskText
@@ -56,7 +58,6 @@ class AddTaskViewController: UIViewController {
             if textField.text?.isEmpty == true {
                 CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }else{
-                let goalItems = realm.objects(Goal.self)
                 task.taskText = textField.text!
                 task.priority = priorityNum
                 try! realm.write {
@@ -68,7 +69,6 @@ class AddTaskViewController: UIViewController {
             if textField.text?.isEmpty == true {
                 CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }else{
-                let goalItems = realm.objects(Goal.self)
                 task.taskText = textField.text!
                 task.priority = priorityNum
                 try! realm.write {
