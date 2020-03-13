@@ -10,7 +10,7 @@ import UIKit
 
 class GoalTableViewCell: UITableViewCell {
     
-    @IBOutlet var badgeImage: UIImageView!
+    @IBOutlet var badgeImageView: UIImageView!
     @IBOutlet var goalTitleLabel: UILabel!
     @IBOutlet var taskProgressView: UIProgressView!
     @IBOutlet var taskProgressLabel: UILabel!

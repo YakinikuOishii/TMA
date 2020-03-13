@@ -58,7 +58,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="badgeImage" destination="DA6-Cg-vzn" id="9fh-nV-lMH"/>
+                <outlet property="badgeImageView" destination="DA6-Cg-vzn" id="JWz-A6-Lix"/>
                 <outlet property="goalTitleLabel" destination="CLJ-oM-OZ6" id="eV6-i4-sWi"/>
                 <outlet property="taskProgressLabel" destination="S8K-Rg-mv5" id="GhM-Jr-ShP"/>
                 <outlet property="taskProgressView" destination="9w6-p6-gau" id="DpV-Kx-psR"/>

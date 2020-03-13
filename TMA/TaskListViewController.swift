@@ -19,7 +19,6 @@ class TaskListViewController: UIViewController {
     
     var goalIndexNum: Int = 0
     var taskIndexNum: Int = 0
-    var taskTextArray: [String] = []
     var goalItems: Results<Goal>!
     var goalItem = Goal()
     var taskItemsByPriority: Results<Task>!
@@ -45,18 +44,17 @@ class TaskListViewController: UIViewController {
     
     // MARK: - segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           if segue.identifier == "toAddTask" {
-               let nextVC: AddTaskViewController = segue.destination as! AddTaskViewController
-               nextVC.goalIndexNum = self.goalIndexNum
-               nextVC.taskIndexNum = self.taskIndexNum
+        if segue.identifier == "toAddTask" {
+            let nextVC: AddTaskViewController = segue.destination as! AddTaskViewController
+            nextVC.goalIndexNum = self.goalIndexNum
+            nextVC.taskIndexNum = self.taskIndexNum
             if editBool == true {
                 nextVC.editBool = true
-                nextVC.taskText = self.taskTextArray[taskIndexNum]
-                print(taskTextArray)
+                nextVC.taskText = self.taskItemsByPriority[taskIndexNum].taskText
             }
-           }
-           
-       }
+        }
+        
+    }
     
     // MARK: - method
     @IBAction func addTask() {
@@ -97,7 +95,11 @@ class TaskListViewController: UIViewController {
 // MARK: - DetaSource
 extension TaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return taskItemsByPriority.count
+        if taskItemsByPriority == nil {
+            return 0
+        }else{
+            return taskItemsByPriority.count
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,9 +108,8 @@ extension TaskListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TaskTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as! TaskTableViewCell
-
+        
         cell.taskLabel.text = taskItemsByPriority[indexPath.row].taskText
-        taskTextArray.append(taskItemsByPriority[indexPath.row].taskText)
         
         for i in 1...5 {
             if i == taskItemsByPriority[indexPath.row].priority {
@@ -143,7 +144,7 @@ extension TaskListViewController: UITableViewDelegate {
             success(true)
             let doneItem = self.taskItemsByPriority[indexPath.row]
             let doneCount = self.goalItem.doneCount + 1
-//            print(self.goalItem)
+            //            print(self.goalItem)
             
             try! self.realm.write {
                 self.realm.delete(doneItem)
@@ -164,7 +165,7 @@ extension TaskListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal,title:  "削除",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
             success(true)
             let deleteItem = self.taskItemsByPriority[indexPath.row]
-//            print(deleteItem)
+            //            print(deleteItem)
             try! self.realm.write{
                 self.realm.delete(deleteItem)
             }

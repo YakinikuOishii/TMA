@@ -55,20 +55,21 @@ class AddTaskViewController: UIViewController {
         priorityJudgment()
         
         if editBool == false {
-            if textField.text?.isEmpty == true {
-                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
-            }else{
+            
+            if let text = textField.text, !text.isEmpty {
                 task.taskText = textField.text!
                 task.priority = priorityNum
                 try! realm.write {
                     goalItems[goalIndexNum].tasks.append(task)
                 }
                 dismiss(animated: true, completion: nil)
-            }
-        }else if editBool == true {
-            if textField.text?.isEmpty == true {
-                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }else{
+                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
+            }
+            
+        }else if editBool == true {
+            
+            if let text = textField.text, !text.isEmpty {
                 task.taskText = textField.text!
                 task.priority = priorityNum
                 try! realm.write {
@@ -76,6 +77,8 @@ class AddTaskViewController: UIViewController {
                     goalItems[goalIndexNum].tasks[taskIndexNum].priority = priorityNum
                 }
                 dismiss(animated: true, completion: nil)
+            }else{
+                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }
         }
     }
@@ -90,24 +93,28 @@ class AddTaskViewController: UIViewController {
     }
     
     func priorityJudgment() {
-        if difficultyNum == 0 && importanceNum == 0 {
+        
+        switch (difficultyNum, importanceNum) {
+        case (0, 0):
             priorityNum = 3
-        }else if difficultyNum == 0 && importanceNum == 1 {
+        case (0, 1):
             priorityNum = 2
-        }else if difficultyNum == 0 && importanceNum == 2 {
+        case (0, 2):
             priorityNum = 1
-        }else if difficultyNum == 1 && importanceNum == 0 {
+        case (1, 0):
             priorityNum = 4
-        }else if difficultyNum == 1 && importanceNum == 1 {
+        case (1, 1):
             priorityNum = 3
-        }else if difficultyNum == 1 && importanceNum == 2 {
+        case (1, 2):
             priorityNum = 1
-        }else if difficultyNum == 2 && importanceNum == 0 {
+        case (2, 0):
             priorityNum = 5
-        }else if difficultyNum == 2 && importanceNum == 1 {
+        case (2, 1):
             priorityNum = 2
-        }else if difficultyNum == 2 && importanceNum == 2 {
+        case (2, 2):
             priorityNum = 1
+        default:
+            priorityNum = 0
         }
     }
     
