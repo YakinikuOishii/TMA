@@ -42,6 +42,9 @@ class ViewController: UIViewController {
         if segue.identifier == "toTask" {
             let nextVC: TaskListViewController = segue.destination as! TaskListViewController
             nextVC.goalIndexNum = self.indexNum
+        }else if segue.identifier == "toAdd" {
+            let nextVC: AddGoalViewController = segue.destination as! AddGoalViewController
+            nextVC.goal = goalItem
         }
     }
     
@@ -52,7 +55,7 @@ extension ViewController: UITableViewDataSource {
     //MARK: section
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        return goalItemsCount
+        return goalItems.count
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -111,8 +114,18 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         indexNum = indexPath.section
-        print(indexNum)
         performSegue(withIdentifier: "toTask", sender: nil)
+    }
+    
+    // 左から右へスワイプ　編集
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal,title:  "編集",handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+            success(true)
+            self.goalItem = self.goalItems[indexPath.section]
+            self.performSegue(withIdentifier: "toAdd", sender: nil)
+        })
+        editAction.backgroundColor = themeColor
+        return UISwipeActionsConfiguration(actions: [editAction])
     }
     
     // 右から左へスワイプ 削除
@@ -122,7 +135,6 @@ extension ViewController: UITableViewDelegate {
             try! self.realm.write{
                 self.realm.delete(self.goalItems[indexPath.section])
             }
-            self.goalItemsCount = self.goalItemsCount - 1
             tableView.reloadData()
         })
         deleteAction.backgroundColor = UIColor(red: 0.988, green: 0.364, blue:0.270, alpha: 1.000)

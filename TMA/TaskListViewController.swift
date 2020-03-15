@@ -18,7 +18,6 @@ class TaskListViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     var goalIndexNum: Int = 0
-    var taskIndexNum: Int = 0
     var goalItems: Results<Goal>!
     var goalItem = Goal()
     var task: Task!
@@ -48,10 +47,6 @@ class TaskListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toAddTask" {
             let nextVC: AddTaskViewController = segue.destination as! AddTaskViewController
-            
-            if let task = task {
-                nextVC.taskText = task.taskText
-            }
             nextVC.task = self.task
             nextVC.goal = goalItem
         }
@@ -128,11 +123,7 @@ extension TaskListViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        taskIndexNum = indexPath.row
-        task = taskItemsByPriority[indexPath.row]
-        
-        performSegue(withIdentifier: "toAddTask", sender: nil)
-        
+        print("tap\(indexPath.row)")
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -157,8 +148,15 @@ extension TaskListViewController: UITableViewDelegate {
             tableView.reloadData()
         })
         
+        let editAction = UIContextualAction(style: .normal, title: "編集", handler: { (action: UIContextualAction, view: UIView, success :(Bool) -> Void) in
+            success(true)
+            self.task = self.taskItemsByPriority[indexPath.row]
+            self.performSegue(withIdentifier: "toAddTask", sender: nil)
+        })
+        
         doneAction.backgroundColor = themeColor
-        return UISwipeActionsConfiguration(actions: [doneAction])
+        editAction.backgroundColor = .blue
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction])
     }
     
     // 右から左へスワイプ 削除

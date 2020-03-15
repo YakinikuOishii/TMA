@@ -12,25 +12,36 @@ import CDAlertView
 
 class AddGoalViewController: UIViewController {
     
-    let goal = Goal()
+    var goal: Goal!
     let realm = try! Realm()
     
     @IBOutlet var textField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let goal = goal {
+            textField.text = goal.goalText
+        }
         // Do any additional setup after loading the view.
     }
     
     @IBAction func addGoal() {
         // textField.textがnilの場合、nilが許容されて落ちないようにif let を使う
-        if let goal = textField.text, !goal.isEmpty {
-            self.goal.goalText = textField.text!
-            
-            try! realm.write {
-                realm.add(self.goal)
+        if let text = textField.text, !text.isEmpty {
+            if let goal = goal { // 編集時
+                try! realm.write {
+                    goal.goalText = textField.text!
+                }
+                dismiss(animated: true, completion: nil)
+            } else { // 新規
+                goal = Goal()
+                goal.goalText = textField.text!
+                try! realm.write {
+                    realm.add(self.goal)
+                }
+                dismiss(animated: true, completion: nil)
             }
-            dismiss(animated: true, completion: nil)
+            
         } else {
             CDAlertView(title: "ゴールが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
         }

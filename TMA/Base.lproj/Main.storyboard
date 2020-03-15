@@ -49,7 +49,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="PAb-Jb-xqh" kind="presentation" id="Cdh-lf-laf"/>
+                                    <segue destination="PAb-Jb-xqh" kind="presentation" identifier="toAdd" id="Cdh-lf-laf"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -311,7 +311,10 @@
                                     <constraint firstAttribute="height" constant="32" id="7Zs-4Q-eYw"/>
                                     <constraint firstAttribute="width" constant="32" id="riI-Pf-Y8Y"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="backButton.png"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="×">
+                                    <color key="titleColor" red="0.074509803920000006" green="0.098039215690000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
                                 <connections>
                                     <action selector="back" destination="Euv-ac-Qui" eventType="touchUpInside" id="ftD-bJ-vqi"/>
                                 </connections>
@@ -383,7 +386,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="backButton.png" width="250" height="250"/>
         <image name="bigStar.png" width="250" height="250"/>
         <image name="buttonBG.png" width="480" height="120"/>
         <image name="cellBG.png" width="933" height="478"/>
