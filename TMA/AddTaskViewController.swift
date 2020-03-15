@@ -22,16 +22,10 @@ class AddTaskViewController: UIViewController {
     var importanceNum: Int = 0
     var priorityNum: Int = 0
     
-    var goalIndexNum: Int = 0
-    var taskIndexNum: Int = 0
-    var doneCount: Int = 0
-    var taskText: String!
-    var editBool: Bool = false
-    
-    var goalItems: Results<Goal>!
     let realm = try! Realm()
-    let goal = Goal()
-    let task = Task()
+    
+    var goal: Goal!
+    var task: Task!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,43 +37,34 @@ class AddTaskViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        goalItems = realm.objects(Goal.self)
-        print("editBoolは\(editBool)")
-        if editBool == true {
-            textField.text = taskText
+        if let task = task {
+            textField.text = task.taskText
         }
     }
     
     @IBAction func addTask() {
         // 文字数制限かける
+        
         priorityJudgment()
         
-        if editBool == false {
-            
-            if let text = textField.text, !text.isEmpty {
+        if let text = textField.text, !text.isEmpty {
+            if let task = task { // もしtaskがnilじゃなかったら = 編集時
+                try! realm.write{
+                    task.taskText = textField.text!
+                    task.priority = priorityNum
+                }
+                dismiss(animated: true, completion: nil)
+            } else { // もしtaskがnilだったら = 新規追加
+                task = Task()
                 task.taskText = textField.text!
                 task.priority = priorityNum
                 try! realm.write {
-                    goalItems[goalIndexNum].tasks.append(task)
+                    goal.tasks.append(task)
                 }
                 dismiss(animated: true, completion: nil)
-            }else{
-                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
             }
-            
-        }else if editBool == true {
-            
-            if let text = textField.text, !text.isEmpty {
-                task.taskText = textField.text!
-                task.priority = priorityNum
-                try! realm.write {
-                    goalItems[goalIndexNum].tasks[taskIndexNum].taskText = textField.text!
-                    goalItems[goalIndexNum].tasks[taskIndexNum].priority = priorityNum
-                }
-                dismiss(animated: true, completion: nil)
-            }else{
-                CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
-            }
+        } else {
+            CDAlertView(title: "タスクが入力されていません！", message: "画面上部から入力してください✏️", type: .notification).show()
         }
     }
     

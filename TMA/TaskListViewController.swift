@@ -21,8 +21,9 @@ class TaskListViewController: UIViewController {
     var taskIndexNum: Int = 0
     var goalItems: Results<Goal>!
     var goalItem = Goal()
+    var task: Task!
     var taskItemsByPriority: Results<Task>!
-    var editBool: Bool = false
+    
     var themeColor: UIColor = UIColor(red: 0.482, green: 0.760, blue:0.788, alpha: 1.0)
     
     let realm = try! Realm()
@@ -39,6 +40,7 @@ class TaskListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         updateUI()
+        print(goalItem)
         tableView.reloadData()
     }
     
@@ -46,19 +48,18 @@ class TaskListViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toAddTask" {
             let nextVC: AddTaskViewController = segue.destination as! AddTaskViewController
-            nextVC.goalIndexNum = self.goalIndexNum
-            nextVC.taskIndexNum = self.taskIndexNum
-            if editBool == true {
-                nextVC.editBool = true
-                nextVC.taskText = self.taskItemsByPriority[taskIndexNum].taskText
+            
+            if let task = task {
+                nextVC.taskText = task.taskText
             }
+            nextVC.task = self.task
+            nextVC.goal = goalItem
         }
         
     }
     
     // MARK: - method
     @IBAction func addTask() {
-        editBool = false
         performSegue(withIdentifier: "toAddTask", sender: nil)
     }
     
@@ -128,7 +129,8 @@ extension TaskListViewController: UITableViewDataSource {
 extension TaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         taskIndexNum = indexPath.row
-        editBool = true
+        task = taskItemsByPriority[indexPath.row]
+        
         performSegue(withIdentifier: "toAddTask", sender: nil)
         
     }
@@ -144,7 +146,6 @@ extension TaskListViewController: UITableViewDelegate {
             success(true)
             let doneItem = self.taskItemsByPriority[indexPath.row]
             let doneCount = self.goalItem.doneCount + 1
-            //            print(self.goalItem)
             
             try! self.realm.write {
                 self.realm.delete(doneItem)
